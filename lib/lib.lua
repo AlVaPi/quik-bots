@@ -84,23 +84,23 @@ function GetLots(sec)
     return lots
 end
 function GetLTime()
-	-- возвращает текущее время компьютера в виде числа формата HHMMSS
+	-- ГўГ®Г§ГўГ°Г Г№Г ГҐГІ ГІГҐГЄГіГ№ГҐГҐ ГўГ°ГҐГ¬Гї ГЄГ®Г¬ГЇГјГѕГІГҐГ°Г  Гў ГўГЁГ¤ГҐ Г·ГЁГ±Г«Г  ГґГ®Г°Г¬Г ГІГ  HHMMSS
 	return tonumber(os.date("%H%M%S"))
 end
 -------------------------------------------
 
--- стоп заявка
+-- Г±ГІГ®ГЇ Г§Г ГїГўГЄГ 
 function SendStopOrder(conf, operation, quantity, stop_price)    
-    local offset=1 -- отступ для гарантированного исполнения ордера по рынку (в кол-ве шагов цены)
+    local offset=1 -- Г®ГІГ±ГІГіГЇ Г¤Г«Гї ГЈГ Г°Г Г­ГІГЁГ°Г®ГўГ Г­Г­Г®ГЈГ® ГЁГ±ГЇГ®Г«Г­ГҐГ­ГЁГї Г®Г°Г¤ГҐГ°Г  ГЇГ® Г°Г»Г­ГЄГі (Гў ГЄГ®Г«-ГўГҐ ГёГ ГЈГ®Гў Г¶ГҐГ­Г»)
     local price
     local direction   
     local step = tonumber(getParamEx(conf.class_code, conf.sec_code, "SEC_PRICE_STEP").param_value)
     if operation=="B" then
         price = stop_price + step*offset 
-        direction = "5" -- Направленность стоп-цены. «5» - больше или равно
+        direction = "5" -- ГЌГ ГЇГ°Г ГўГ«ГҐГ­Г­Г®Г±ГІГј Г±ГІГ®ГЇ-Г¶ГҐГ­Г». В«5В» - ГЎГ®Г«ГјГёГҐ ГЁГ«ГЁ Г°Г ГўГ­Г®
     else 
         price = stop_price - step*offset 
-        direction = "4" -- Направленность стоп-цены. «4» - меньше или равно
+        direction = "4" -- ГЌГ ГЇГ°Г ГўГ«ГҐГ­Г­Г®Г±ГІГј Г±ГІГ®ГЇ-Г¶ГҐГ­Г». В«4В» - Г¬ГҐГ­ГјГёГҐ ГЁГ«ГЁ Г°Г ГўГ­Г®
     end
     local trans_params = 
         {
@@ -121,7 +121,7 @@ function SendStopOrder(conf, operation, quantity, stop_price)
 		COMMENT = "BB_bot"
         }
    local result = sendTransaction(trans_params)
---	message('РўСЂР°РЅР·Р°РєС†РёСЏ: '..trans_params.TRANS_ID..'   '..trans_params.OPERATION..' Р¦РµРЅР°: '.. trans_params.PRICE,3)
+--	message('ГђВўГ‘в‚¬ГђВ°ГђВЅГђВ·ГђВ°ГђВєГ‘вЂ ГђВёГ‘ВЏ: '..trans_params.TRANS_ID..'   '..trans_params.OPERATION..' ГђВ¦ГђВµГђВЅГђВ°: '.. trans_params.PRICE,3)
    if string.len(result) ~= "" then
 --       message('Error: '..result,3)
        return nil, result
