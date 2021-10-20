@@ -5,7 +5,7 @@ Quik Table class QTable
 QTable ={}
 QTable.__index = QTable
 
--- Создать и инициализировать экземпляр таблицы QTable
+-- Г‘Г®Г§Г¤Г ГІГј ГЁ ГЁГ­ГЁГ¶ГЁГ Г«ГЁГ§ГЁГ°Г®ГўГ ГІГј ГЅГЄГ§ГҐГ¬ГЇГ«ГїГ° ГІГ ГЎГ«ГЁГ¶Г» QTable
 function QTable.new()
 	 local t_id = AllocTable()
      if t_id then
@@ -16,9 +16,9 @@ function QTable.new()
         q_table.created = false
 		q_table.curr_col=0
 		q_table.curr_line=0
-        --таблица с описанием параметров столбцов
+        --ГІГ ГЎГ«ГЁГ¶Г  Г± Г®ГЇГЁГ±Г Г­ГЁГҐГ¬ ГЇГ Г°Г Г¬ГҐГІГ°Г®Гў Г±ГІГ®Г«ГЎГ¶Г®Гў
         q_table.columns={}
-		--таблица с данными столбцов
+		--ГІГ ГЎГ«ГЁГ¶Г  Г± Г¤Г Г­Г­Г»Г¬ГЁ Г±ГІГ®Г«ГЎГ¶Г®Гў
 		q_table.data={}
          return q_table
      else
@@ -27,21 +27,21 @@ function QTable.new()
 end
 
 function QTable:Show()
-	-- отобразить в терминале окно с созданной таблицей
+	-- Г®ГІГ®ГЎГ°Г Г§ГЁГІГј Гў ГІГҐГ°Г¬ГЁГ­Г Г«ГҐ Г®ГЄГ­Г® Г± Г±Г®Г§Г¤Г Г­Г­Г®Г© ГІГ ГЎГ«ГЁГ¶ГҐГ©
 	CreateWindow(self.t_id)
 	if self.caption ~="" then
-		-- задать заголовок для окна
+		-- Г§Г Г¤Г ГІГј Г§Г ГЈГ®Г«Г®ГўГ®ГЄ Г¤Г«Гї Г®ГЄГ­Г 
 		SetWindowCaption(self.t_id, self.caption)
 	end
 	self.created = true
 end
 function QTable:IsClosed()
-	-- если окно с таблицей закрыто, возвращает «true»
+	-- ГҐГ±Г«ГЁ Г®ГЄГ­Г® Г± ГІГ ГЎГ«ГЁГ¶ГҐГ© Г§Г ГЄГ°Г»ГІГ®, ГўГ®Г§ГўГ°Г Г№Г ГҐГІ В«trueВ»
 	return IsWindowClosed(self.t_id)
 end
 
 function QTable:delete()
-	-- удалить таблицу
+	-- ГіГ¤Г Г«ГЁГІГј ГІГ ГЎГ«ГЁГ¶Гі
 	DestroyTable(self.t_id)
 end
 
@@ -49,12 +49,12 @@ function QTable:GetCaption()
 	if IsWindowClosed(self.t_id) then
 		return self.caption
 	else
-		-- возвращает строку, содержащую заголовок таблицы
+		-- ГўГ®Г§ГўГ°Г Г№Г ГҐГІ Г±ГІГ°Г®ГЄГі, Г±Г®Г¤ГҐГ°Г¦Г Г№ГіГѕ Г§Г ГЈГ®Г«Г®ГўГ®ГЄ ГІГ ГЎГ«ГЁГ¶Г»
 		return GetWindowCaption(self.t_id)
 	end
 end
 
--- Задать заголовок таблицы
+-- Г‡Г Г¤Г ГІГј Г§Г ГЈГ®Г«Г®ГўГ®ГЄ ГІГ ГЎГ«ГЁГ¶Г»
 function QTable:SetCaption(s)
 	self.caption = s
 	if not IsWindowClosed(self.t_id) then
@@ -62,8 +62,8 @@ function QTable:SetCaption(s)
 	end
 end
 
--- Добавить описание столбца <name> типа <c_type> в таблицу
--- <ff> – функция форматирования данных для отображения
+-- Г„Г®ГЎГ ГўГЁГІГј Г®ГЇГЁГ±Г Г­ГЁГҐ Г±ГІГ®Г«ГЎГ¶Г  <name> ГІГЁГЇГ  <c_type> Гў ГІГ ГЎГ«ГЁГ¶Гі
+-- <ff> вЂ“ ГґГіГ­ГЄГ¶ГЁГї ГґГ®Г°Г¬Г ГІГЁГ°Г®ГўГ Г­ГЁГї Г¤Г Г­Г­Г»Гµ Г¤Г«Гї Г®ГІГ®ГЎГ°Г Г¦ГҐГ­ГЁГї
 function QTable:AddColumn(name, c_type, width, ff )
 	local col_desc={}
 	self.curr_col=self.curr_col+1
@@ -71,18 +71,18 @@ function QTable:AddColumn(name, c_type, width, ff )
 	col_desc.format_function = ff
 	col_desc.id = self.curr_col
 	self.columns[name] = col_desc
-	-- <name> используется в качестве заголовка таблицы
+	-- <name> ГЁГ±ГЇГ®Г«ГјГ§ГіГҐГІГ±Гї Гў ГЄГ Г·ГҐГ±ГІГўГҐ Г§Г ГЈГ®Г«Г®ГўГЄГ  ГІГ ГЎГ«ГЁГ¶Г»
 	AddColumn(self.t_id, self.curr_col, name, true, c_type, width)
 end
 
 function QTable:Clear()
-	-- очистить таблицу
+	-- Г®Г·ГЁГ±ГІГЁГІГј ГІГ ГЎГ«ГЁГ¶Гі
 	Clear(self.t_id)
 end
 
--- Установить значение в ячейке
+-- Г“Г±ГІГ Г­Г®ГўГЁГІГј Г§Г­Г Г·ГҐГ­ГЁГҐ Гў ГїГ·ГҐГ©ГЄГҐ
 function QTable:SetValue(row, col_name, data, formatted)
-	-- Установить значение в ячейке
+	-- Г“Г±ГІГ Г­Г®ГўГЁГІГј Г§Г­Г Г·ГҐГ­ГЁГҐ Гў ГїГ·ГҐГ©ГЄГҐ
 	local col_ind = self.columns[col_name].id or nil
 	if col_ind == nil then
 		return false
@@ -91,19 +91,19 @@ function QTable:SetValue(row, col_name, data, formatted)
 	if self.data[row][col_ind]==data then return true end
 	self.data[row][col_ind]=data
 	local col_type = self.columns[col_name].c_type
-	-- если для числового столбца дано НЕчисловое значение, то применяем к нему tonumber
+	-- ГҐГ±Г«ГЁ Г¤Г«Гї Г·ГЁГ±Г«Г®ГўГ®ГЈГ® Г±ГІГ®Г«ГЎГ¶Г  Г¤Г Г­Г® ГЌГ…Г·ГЁГ±Г«Г®ГўГ®ГҐ Г§Г­Г Г·ГҐГ­ГЁГҐ, ГІГ® ГЇГ°ГЁГ¬ГҐГ­ГїГҐГ¬ ГЄ Г­ГҐГ¬Гі tonumber
 	if type(data) ~= "number" and (col_type==QTABLE_INT_TYPE or col_type==QTABLE_DOUBLE_TYPE or col_type==QTABLE_INT64_TYPE) then
 		data = tonumber(data) or 0
 	end
-	-- если для НЕстрокового значения уже дан отформатированный вариант, то сначала используется он
+	-- ГҐГ±Г«ГЁ Г¤Г«Гї ГЌГ…Г±ГІГ°Г®ГЄГ®ГўГ®ГЈГ® Г§Г­Г Г·ГҐГ­ГЁГї ГіГ¦ГҐ Г¤Г Г­ Г®ГІГґГ®Г°Г¬Г ГІГЁГ°Г®ГўГ Г­Г­Г»Г© ГўГ Г°ГЁГ Г­ГІ, ГІГ® Г±Г­Г Г·Г Г«Г  ГЁГ±ГЇГ®Г«ГјГ§ГіГҐГІГ±Гї Г®Г­
 	if formatted and col_type~=QTABLE_STRING_TYPE and col_type~=QTABLE_CACHED_STRING_TYPE then
 		return SetCell(self.t_id, row, col_ind, formatted, data)
 	end
-	-- если для столбца задана функция форматирования, то она используется
+	-- ГҐГ±Г«ГЁ Г¤Г«Гї Г±ГІГ®Г«ГЎГ¶Г  Г§Г Г¤Г Г­Г  ГґГіГ­ГЄГ¶ГЁГї ГґГ®Г°Г¬Г ГІГЁГ°Г®ГўГ Г­ГЁГї, ГІГ® Г®Г­Г  ГЁГ±ГЇГ®Г«ГјГ§ГіГҐГІГ±Гї
 	local ff = self.columns[col_name].format_function
 	if type(ff) == "function" then
-		-- в качестве строкового представления используется
-		-- результат выполнения функции форматирования
+		-- Гў ГЄГ Г·ГҐГ±ГІГўГҐ Г±ГІГ°Г®ГЄГ®ГўГ®ГЈГ® ГЇГ°ГҐГ¤Г±ГІГ ГўГ«ГҐГ­ГЁГї ГЁГ±ГЇГ®Г«ГјГ§ГіГҐГІГ±Гї
+		-- Г°ГҐГ§ГіГ«ГјГІГ ГІ ГўГ»ГЇГ®Г«Г­ГҐГ­ГЁГї ГґГіГ­ГЄГ¶ГЁГЁ ГґГ®Г°Г¬Г ГІГЁГ°Г®ГўГ Г­ГЁГї
 		if col_type==QTABLE_STRING_TYPE or col_type==QTABLE_CACHED_STRING_TYPE then
 			return SetCell(self.t_id, row, col_ind, ff(data))
 		else
@@ -118,29 +118,29 @@ function QTable:SetValue(row, col_name, data, formatted)
 	end
 end
 function QTable:AddLine(key)
-   -- добавляет пустую строчку в место key или в конец таблицы и возвращает ее номер
+   -- Г¤Г®ГЎГ ГўГ«ГїГҐГІ ГЇГіГ±ГІГіГѕ Г±ГІГ°Г®Г·ГЄГі Гў Г¬ГҐГ±ГІГ® key ГЁГ«ГЁ Гў ГЄГ®Г­ГҐГ¶ ГІГ ГЎГ«ГЁГ¶Г» ГЁ ГўГ®Г§ГўГ°Г Г№Г ГҐГІ ГҐГҐ Г­Г®Г¬ГҐГ°
    local line=InsertRow(self.t_id, key or -1)
    if line==-1 then return nil else self.curr_line=self.curr_line+1 table_insert(self.data,line,{}) return line end
 end
 function QTable:AddLines(num)
-	-- добавляет в конец таблицы num пустых строчек
+	-- Г¤Г®ГЎГ ГўГ«ГїГҐГІ Гў ГЄГ®Г­ГҐГ¶ ГІГ ГЎГ«ГЁГ¶Г» num ГЇГіГ±ГІГ»Гµ Г±ГІГ°Г®Г·ГҐГЄ
 	for i = 1, num do
 		InsertRow(self.t_id, -1)
 	end
 end
 function QTable:DeleteLine(key)
-   -- удаляет строчку в месте key или в конце таблицы
+   -- ГіГ¤Г Г«ГїГҐГІ Г±ГІГ°Г®Г·ГЄГі Гў Г¬ГҐГ±ГІГҐ key ГЁГ«ГЁ Гў ГЄГ®Г­Г¶ГҐ ГІГ ГЎГ«ГЁГ¶Г»
    key = key or self.curr_line
    self.curr_line=self.curr_line-1
    table_remove(self.data,key)
    return DeleteRow(self.t_id,key)
 end
 function QTable:GetSize()
-	-- возвращает размер таблицы
+	-- ГўГ®Г§ГўГ°Г Г№Г ГҐГІ Г°Г Г§Г¬ГҐГ° ГІГ ГЎГ«ГЁГ¶Г»
 	return GetTableSize(self.t_id)
 end
 
--- Получить данные из ячейки по номеру строки и имени столбца
+-- ГЏГ®Г«ГіГ·ГЁГІГј Г¤Г Г­Г­Г»ГҐ ГЁГ§ ГїГ·ГҐГ©ГЄГЁ ГЇГ® Г­Г®Г¬ГҐГ°Гі Г±ГІГ°Г®ГЄГЁ ГЁ ГЁГ¬ГҐГ­ГЁ Г±ГІГ®Г«ГЎГ¶Г 
 function QTable:GetValue(row, name)
 	local t={}
 	local col_ind = self.columns[name].id
@@ -151,12 +151,12 @@ function QTable:GetValue(row, name)
 	return t
 end
 
--- Задать координаты окна
+-- Г‡Г Г¤Г ГІГј ГЄГ®Г®Г°Г¤ГЁГ­Г ГІГ» Г®ГЄГ­Г 
 function QTable:SetPosition(x, y, dx, dy)
 	return SetWindowPos(self.t_id, x, y, dx, dy)
 end
 
--- Функция возвращает координаты окна
+-- Г”ГіГ­ГЄГ¶ГЁГї ГўГ®Г§ГўГ°Г Г№Г ГҐГІ ГЄГ®Г®Г°Г¤ГЁГ­Г ГІГ» Г®ГЄГ­Г 
 function QTable:GetPosition()
 	top, left, bottom, right = GetWindowRect(self.t_id)
 	return top, left, right-left, bottom-top
@@ -183,7 +183,7 @@ function QTable:SetColor(row,col_name,b_color,f_color,sel_b_color,sel_f_color)
 	return SetColor(self.t_id,row_ind,col_ind,bcnum,fcnum,selbcnum,selfcnum)
 end
 function QTable:Highlight(row,col_name,b_color,f_color,timeout)
-	-- подсветка ячейки, строчки, столбуа - в зависимости от параметров row,col_nameю. Цвет фона - b_color, цвет текста - f_color, затухание - timeout мс
+	-- ГЇГ®Г¤Г±ГўГҐГІГЄГ  ГїГ·ГҐГ©ГЄГЁ, Г±ГІГ°Г®Г·ГЄГЁ, Г±ГІГ®Г«ГЎГіГ  - Гў Г§Г ГўГЁГ±ГЁГ¬Г®Г±ГІГЁ Г®ГІ ГЇГ Г°Г Г¬ГҐГІГ°Г®Гў row,col_nameГѕ. Г–ГўГҐГІ ГґГ®Г­Г  - b_color, Г¶ГўГҐГІ ГІГҐГЄГ±ГІГ  - f_color, Г§Г ГІГіГµГ Г­ГЁГҐ - timeout Г¬Г±
 	local col_ind,row_ind=nil,nil
 	if row==nil then row_ind=QTABLE_NO_INDEX else row_ind=row end
 	if col_name==nil then col_ind=QTABLE_NO_INDEX
@@ -202,7 +202,7 @@ function QTable:Highlight(row,col_name,b_color,f_color,timeout)
 	return Highlight(self.t_id,row_ind,col_ind,bcnum,fcnum,timeout)
 end
 function QTable:StopHighlight(row,col_name)
-	-- отмена подсветки
+	-- Г®ГІГ¬ГҐГ­Г  ГЇГ®Г¤Г±ГўГҐГІГЄГЁ
 	local col_ind,row_ind=nil,nil
 	if row==nil then row_ind=QTABLE_NO_INDEX else row_ind=row end
 	if col_name==nil then col_ind=QTABLE_NO_INDEX
@@ -216,7 +216,7 @@ function QTable:StopHighlight(row,col_name)
 	return Highlight(self.t_id,row_ind,col_ind,nil,nil,0)
 end
 function QTable:SetTableNotificationCallback(func)
-	-- Задание функции обратного вызова для обработки событий в таблице
+	-- Г‡Г Г¤Г Г­ГЁГҐ ГґГіГ­ГЄГ¶ГЁГЁ Г®ГЎГ°Г ГІГ­Г®ГЈГ® ГўГ»Г§Г®ГўГ  Г¤Г«Гї Г®ГЎГ°Г ГЎГ®ГІГЄГЁ Г±Г®ГЎГ»ГІГЁГ© Гў ГІГ ГЎГ«ГЁГ¶ГҐ
 	if func~=nil and type(func)=='function' then
 		return SetTableNotificationCallback(self.t_id,func)
 	end
