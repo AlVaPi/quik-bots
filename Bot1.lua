@@ -1,6 +1,4 @@
-dofile(getScriptPath() .. "\\lib.lua");
-
--- присванивание переменным начальных базовых значений торгового алгоритма
+-- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 conf = {
 	account="A717yt9",
 	class_code="SPBFUT",
@@ -22,5 +20,8 @@ conf = {
 	power_low=-200
 }
 params_path = getScriptPath()..'\\bot1.params'
-
+dofile(getScriptPath() .. "\\qtable.lua");
+dofile(getScriptPath() .. "\\graphics.lua");
+dofile(getScriptPath() .. "\\lib.lua");
+dofile(getScriptPath() .. "\\func.lua");
 dofile(getScriptPath() .. "\\rsi.lua");
