@@ -17,7 +17,9 @@ conf = {
 	lost=1000,
 	sar_diff = 250,
 	power_high=200,
-	power_low=-200
+	power_low=-200,
+	trade_start=100100,
+	trade_stop=210000		
 }
 params_path = getScriptPath()..'\\bot1.params'
 dofile(getScriptPath() .. "\\qtable.lua");
