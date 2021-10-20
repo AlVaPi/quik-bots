@@ -65,24 +65,24 @@ function main()
 				else
 					if params.pos_number == 0 then   -- ���� � �������
 						if open_long then
-							trans_id, trans_msg = SendMarketOrder(conf, conf.sec_code, "B", conf.trade_lots)
+							trans_id, trans_msg = SendMarketOrder("B")
 							pos_next = conf.trade_lots
 						elseif 	open_short then
-							trans_id, trans_msg = SendMarketOrder(conf, conf.sec_code, "S", conf.trade_lots)
+							trans_id, trans_msg = SendMarketOrder("S")
 							pos_next = -conf.trade_lots
 						else
 						
 						end
 					elseif params.pos_number >= conf.trade_lots then -- ����� �� �����
 						if close_long then
-							trans_id, trans_msg = SendMarketOrder(conf, conf.sec_code, "S", abs_pos_number)
+							trans_id, trans_msg = SendMarketOrder("S", abs_pos_number)
 							pos_next = 0
 						else
 	
 						end
 					elseif params.pos_number <= -conf.trade_lots then --����� �� �����
 						if close_short then
-							trans_id, trans_msg = SendMarketOrder(conf, conf.sec_code, "B", abs_pos_number)
+							trans_id, trans_msg = SendMarketOrder("B", abs_pos_number)
 							pos_next = 0
 						else 
 						
@@ -96,57 +96,3 @@ function main()
 		sleep(1000)            -- ������������ ���� � ��������� 1���.
     end
 end 
-function CloseAllPos()
-	if params.pos_number > 0 then
-		trans_id, trans_msg = SendMarketOrder(conf, conf.sec_code, "S", abs_pos_number)
-	elseif params.pos_number < 0 then
-		trans_id, trans_msg = SendMarketOrder(conf, conf.sec_code, "B", abs_pos_number)
-	end
-end
-
-function CreateTable ()
--- ������� ��������� QTable
-	local t = QTable.new()
-	if not t then
-		message("Create table error!", 3)
-		return nil
-	else
-		t:AddColumn("SEC", QTABLE_CACHED_STRING_TYPE, 10)
-		t:AddColumn("���.", QTABLE_CACHED_STRING_TYPE, 10)
-		t:AddColumn("���� ������", QTABLE_CACHED_STRING_TYPE, 20)
-		t:AddColumn("���� ���.", QTABLE_CACHED_STRING_TYPE, 20)
-		t:AddColumn("�����", QTABLE_CACHED_STRING_TYPE, 20)
-		t:AddColumn("�������", QTABLE_CACHED_STRING_TYPE, 20)
-		SetTableNotificationCallback (t.t_id, OnTableEvent)
-		t:Show()
-		t:SetCaption(table_caption)
-		t:AddLines(6)
-		t:SetPosition(0, 0, 600, 145)
-		SetCell(t.t_id, 6, 1, "����")
-		SetCell(t.t_id, 6, 6, "������� ��")
-		return t
-	end	
-end
-function UpdateTableRow(t, row, col1, col2, col3, col4, col5, col6)
-
-	SetCell(t.t_id, row, 1, tostring(col1))
-	SetCell(t.t_id, row, 2, tostring(col2))
-	SetCell(t.t_id, row, 3, tostring(col3))
-	SetCell(t.t_id, row, 4, tostring(col4))
-	SetCell(t.t_id, row, 5, tostring(col5))
-	SetCell(t.t_id, row, 6, tostring(col6))
-end
-function OnTableEvent (t_id, msg, par1, par2)
-	if msg == QTABLE_LBUTTONDBLCLK and par1 ==6 then
-		if par2 == 1 then
-			message ('Bot (rsi) --> ���� ������ �������', 2)
-			OnStop()
-		end
-		if par2 == 6 then
-			message ('Bot (rsi) --> ��������� ������� ������� � ����', 2)
-			CloseAllPos()
-			OnStop()
-		end
-	end
-
-end
