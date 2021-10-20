@@ -1,8 +1,8 @@
 function main()
 	while is_run do
 		is_torg = false
-		if isConnected() == 1 and status_torg == 1 then -- проверка наличия соеденения с сервером и попадания в торговое окно
-			table_show:SetCaption(table_caption..' - ожидаем данные')
+		if isConnected() == 1 and status_torg == 1 then -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+			table_show:SetCaption(table_caption..' - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ')
 			ds_num = ds:Size() or 0
 			carrent_price = ds:C(ds_num)
 --			bb_candles = getNumCandles(conf.tag_bb) or 0
@@ -11,11 +11,11 @@ function main()
 			is_torg = ds:Size() > 0  and isChartExist(conf.tag_bb) and isChartExist(conf.tag_haclose)
 		end
  		
-		if is_torg then -- торговля
-			table_show:SetCaption(table_caption..' - торговля')
+		if is_torg then -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+			table_show:SetCaption(table_caption..' - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ')
 
 			abs_pos_number = math.abs (params.pos_number)		
--- место для размещения торговой логики			
+-- пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ			
 			trend_up = getLastCandle(conf.tag_bb).close > getPrevCandle(conf.tag_bb).close
 			trend_down = getLastCandle(conf.tag_bb).close < getPrevCandle(conf.tag_bb).close
 			trend_ind = IIIF(trend_up, "trend up", trend_down, "trend down", "no trend")
@@ -31,6 +31,7 @@ function main()
 			close_long = open_short -- or CrossUnder(1, conf.tag_haclose, conf.tag_bb,  "close", 0, 1)
 			close_short = open_long -- or CrossOver(1, conf.tag_haclose, conf.tag_bb, "close", 0, 1)
 			cls_ind = IIIF(close_long, "close long", close_short, "close short", "no close")
+			
 			can_ind = IIIF(CandleUp(conf.tag_price,0), "Candle Up", CandleDown(conf.tag_price,0), "Candle Down", "Candle undefine")			
 	
 			if params.pos_number > 0 then 
@@ -45,19 +46,19 @@ function main()
 			if GetLTime() < conf.trade_start or GetLTime() > conf.trade_stop then
 				open_long = false
 				open_short = false
-				table_show:SetCaption(table_caption..' - не время открывать позиции')
+				table_show:SetCaption(table_caption..' - пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ')
 			end
 			UpdateTableRow(table_show, 1, conf.sec_code, params.pos_number, last_trade_price, carrent_price, profit, profit * abs_pos_number)
 			UpdateTableRow(table_show, 2, "BB", MathRound(getLastCandle(conf.tag_bb).close), "","", "", "")
 			UpdateTableRow(table_show, 3, "Logic", "",trend_ind, wls_ind, ols_ind, cls_ind)			
 			UpdateTableRow(table_show, 4, "Candle", CandleDiff(conf.tag_price,0), can_ind, "", "", "")
-			UpdateTableRow(table_show, 5, "Итого", "", "", "", "", RubPrice(params.sum_profit))
+			UpdateTableRow(table_show, 5, "пїЅпїЅпїЅпїЅпїЅ", "", "", "", "", RubPrice(params.sum_profit))
 			
 
-			if profit >= conf.profit then -- закрываем позицию, если достигнут профит 
+			if profit >= conf.profit then -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ 
 				CloseAllPos()
 			else
-				if params.pos_number == 0 then   -- вход в позицию
+				if params.pos_number == 0 then   -- пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 					if open_long then
 						trans_id, trans_msg = SendMarketOrder("B")
 						candle_long_num = ds_num
@@ -67,13 +68,13 @@ function main()
 					else
 					
 					end
-				elseif params.pos_number >= conf.trade_lots then -- выход из лонга
+				elseif params.pos_number >= conf.trade_lots then -- пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 					if close_long then
 						trans_id, trans_msg = SendMarketOrder("S", abs_pos_number)
 					else
 
 					end
-				elseif params.pos_number <= -conf.trade_lots then --выход из шорта
+				elseif params.pos_number <= -conf.trade_lots then --пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 					if close_short then
 						trans_id, trans_msg = SendMarketOrder("B", abs_pos_number)
 					else 
@@ -84,6 +85,6 @@ function main()
 			
 		end
 
-		sleep(1000)            -- обрабатываем цикл с задержкой 1сек.
+		sleep(1000)            -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 1пїЅпїЅпїЅ.
     end
 end 
