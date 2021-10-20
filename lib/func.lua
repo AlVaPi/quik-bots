@@ -1,10 +1,10 @@
 function OnInit(script)              
 	params = TabRead(params_path)
 	if params == nil then
-		message('Нет файла параметров: '..params_path,3)
+		message('ГЌГҐГІ ГґГ Г©Г«Г  ГЇГ Г°Г Г¬ГҐГІГ°Г®Гў: '..params_path,3)
 		is_run = false
 	else
-		ds = CreateDataSource(conf.class_code, conf.sec_code, conf.timeframe)  -- подписываемся на получение данных свечей по инструменту в массив ds
+		ds = CreateDataSource(conf.class_code, conf.sec_code, conf.timeframe)  -- ГЇГ®Г¤ГЇГЁГ±Г»ГўГ ГҐГ¬Г±Гї Г­Г  ГЇГ®Г«ГіГ·ГҐГ­ГЁГҐ Г¤Г Г­Г­Г»Гµ Г±ГўГҐГ·ГҐГ© ГЇГ® ГЁГ­Г±ГІГ°ГіГ¬ГҐГ­ГІГі Гў Г¬Г Г±Г±ГЁГў ds
 		table_show = CreateTable()
 		is_run = true
 	end
@@ -41,18 +41,18 @@ function OnStop()
 end
 
 function OnTrade(trade)
-    -- Если номер последнего трейда не не равен номеру текущего
+    -- Г…Г±Г«ГЁ Г­Г®Г¬ГҐГ° ГЇГ®Г±Г«ГҐГ¤Г­ГҐГЈГ® ГІГ°ГҐГ©Г¤Г  Г­ГҐ Г­ГҐ Г°Г ГўГҐГ­ Г­Г®Г¬ГҐГ°Гі ГІГҐГЄГіГ№ГҐГЈГ®
     if trade.sec_code == conf.sec_code and last_trade_num < trade.trade_num and not conf.test_mode then
-        -- Запомним номер последнего трейда
+        -- Г‡Г ГЇГ®Г¬Г­ГЁГ¬ Г­Г®Г¬ГҐГ° ГЇГ®Г±Г«ГҐГ¤Г­ГҐГЈГ® ГІГ°ГҐГ©Г¤Г 
         last_trade_num = trade.trade_num
-        -- Если заявка не активна и исполнена
+        -- Г…Г±Г«ГЁ Г§Г ГїГўГЄГ  Г­ГҐ Г ГЄГІГЁГўГ­Г  ГЁ ГЁГ±ГЇГ®Г«Г­ГҐГ­Г 
         if bit_set(trade.flags, 0) == false and bit_set(trade.flags, 1) == false then
           if bit_set(trade.flags, 2) == true then
---            Продажа
+--            ГЏГ°Г®Г¤Г Г¦Г 
 			params.last_sell_price = trade.price
 	
           else 
---            Покупка
+--            ГЏГ®ГЄГіГЇГЄГ 
 			params.last_buy_price = trade.price
 
           end
@@ -108,7 +108,7 @@ function SendMarketOrder(operation, quantity, scode, ccode)
 		sleep(100)
 	end
 	
---	message('Транзакция: '..trans_params.TRANS_ID..'   '..trans_params.OPERATION..' Цена: '.. trans_params.PRICE,3)
+--	message('Г’Г°Г Г­Г§Г ГЄГ¶ГЁГї: '..trans_params.TRANS_ID..'   '..trans_params.OPERATION..' Г–ГҐГ­Г : '.. trans_params.PRICE,3)
    if string.len(result) ~= "" then
 --       message('Error: '..result,3)
        return nil, result
@@ -125,25 +125,25 @@ function CloseAllPos()
 end
 ------------------------
 function CreateTable ()
--- создать экземплЯр QTable
+-- Г±Г®Г§Г¤Г ГІГј ГЅГЄГ§ГҐГ¬ГЇГ«ГџГ° QTable
 	local t = QTable.new()
 	if not t then
 		message("Create table error!", 3)
 		return nil
 	else
 		t:AddColumn("SEC", QTABLE_CACHED_STRING_TYPE, 10)
-		t:AddColumn("Поз.", QTABLE_CACHED_STRING_TYPE, 10)
-		t:AddColumn("Цена сделки", QTABLE_CACHED_STRING_TYPE, 20)
-		t:AddColumn("Цена тек.", QTABLE_CACHED_STRING_TYPE, 20)
-		t:AddColumn("Маржа", QTABLE_CACHED_STRING_TYPE, 20)
-		t:AddColumn("Прибыль", QTABLE_CACHED_STRING_TYPE, 20)
+		t:AddColumn("ГЏГ®Г§.", QTABLE_CACHED_STRING_TYPE, 10)
+		t:AddColumn("Г–ГҐГ­Г  Г±Г¤ГҐГ«ГЄГЁ", QTABLE_CACHED_STRING_TYPE, 20)
+		t:AddColumn("Г–ГҐГ­Г  ГІГҐГЄ.", QTABLE_CACHED_STRING_TYPE, 20)
+		t:AddColumn("ГЊГ Г°Г¦Г ", QTABLE_CACHED_STRING_TYPE, 20)
+		t:AddColumn("ГЏГ°ГЁГЎГ»Г«Гј", QTABLE_CACHED_STRING_TYPE, 20)
 		SetTableNotificationCallback (t.t_id, OnTableEvent)
 		t:SetCaption(table_caption)
 		t:Show()
 		t:AddLines(6)
 		t:SetPosition(0, 0, 600, 145)
-		SetCell(t.t_id, 6, 1, "Стоп")
-		SetCell(t.t_id, 6, 6, "Закрыть всё")
+		SetCell(t.t_id, 6, 1, "Г‘ГІГ®ГЇ")
+		SetCell(t.t_id, 6, 6, "Г‡Г ГЄГ°Г»ГІГј ГўГ±Вё")
 		return t
 	end	
 end
@@ -159,11 +159,11 @@ end
 function OnTableEvent (t_id, msg, par1, par2)
 	if msg == QTABLE_LBUTTONDBLCLK and par1 ==6 then
 		if par2 == 1 then
-			message (table_caption.." --> Стоп скрипт вручную", 2)
+			message (table_caption.." --> Г‘ГІГ®ГЇ Г±ГЄГ°ГЁГЇГІ ГўГ°ГіГ·Г­ГіГѕ", 2)
 			OnStop()
 		end
 		if par2 == 6 then
-			message (table_caption.." --> Закрываем позиции вручную и стоп", 2)
+			message (table_caption.." --> Г‡Г ГЄГ°Г»ГўГ ГҐГ¬ ГЇГ®Г§ГЁГ¶ГЁГЁ ГўГ°ГіГ·Г­ГіГѕ ГЁ Г±ГІГ®ГЇ", 2)
 			CloseAllPos()
 			OnStop()
 		end
